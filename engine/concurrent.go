@@ -1,6 +1,6 @@
 package engine
 
-import "fmt"
+import "log"
 
 type Scheduler interface {
 	Submit(r Request)
@@ -25,7 +25,7 @@ func (c *ConcurrentEngine) Run(seeds ...Request) {
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			fmt.Printf("get item :", item)
+			log.Printf("get item %v:", item)
 		}
 		for _, request := range result.Request {
 			c.Scheduler.Submit(request)
@@ -36,7 +36,7 @@ func createWork(in chan Request, out chan ParseResult) {
 	go func() {
 		for {
 			request := <-in
-			result, err := SimpleEngine{}.worker(request)
+			result, err := Worker(request)
 			if err != nil {
 				continue
 			}

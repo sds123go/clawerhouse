@@ -13,4 +13,14 @@ func main() {
 		ParserFunc: parser.ParseAreaList,
 	})
 
+	// httpText := "https://sh.julive.com/project/s"
+	// e := engine.ConcurrentEngine{
+	// 	Scheduler: &scheduler.SimpleScheduler{},
+	// 	WorkCount: 10,
+	// }
+	// e.Run(engine.Request{
+	// 	Url:        httpText,
+	// 	ParserFunc: parser.ParseAreaList,
+	// })
+
 }

@@ -6,7 +6,6 @@ import (
 )
 
 const houseListRe = `<a class="pic-image" href="https://sh.julive.com/project/([0-9]+).html".*alt="([^"]+)`
-
 func ParserArea(contents []byte) engine.ParseResult {
 	re := regexp.MustCompile(houseListRe)
 	matches := re.FindAllSubmatch(contents, -1)
