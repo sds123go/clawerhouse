@@ -12,7 +12,6 @@ type BasicIfo struct {
 	TotalPrice   string
 	PropertyType string
 	Address      string
-	Loop         string
 }
 type SaleIfo struct {
 	OpenTime string

@@ -18,7 +18,7 @@ func(s *SimpleEngine) Run(seeds ...Request) {
 		if err!=nil{
 			continue
 		}
-		requests = append(requests, parseResult.Request...)
+		requests = append(requests, parseResult.Requests...)
 		for _, item := range parseResult.Items {
 			log.Printf("Get item %s", item)
 		}

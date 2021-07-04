@@ -2,6 +2,7 @@ package fetcher
 
 import (
 	"bufio"
+	"errors"
 	"io/ioutil"
 	"net/http"
 
@@ -21,20 +22,18 @@ func determineEncoding(r *bufio.Reader) encoding.Encoding {
 	return e
 }
 func Fetch(url string) ([]byte, error) {
-	var data []byte
+
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode == http.StatusOK {
-		bodyReader := bufio.NewReader(resp.Body)
-		e := determineEncoding(bodyReader)
-		utf8Reader := transform.NewReader(bodyReader, e.NewDecoder())
-		data, err = ioutil.ReadAll(utf8Reader)
-		if err != nil {
-			return nil, err
-		}
+	if resp.StatusCode != http.StatusOK {
+		return nil, errors.New("error！")
 	}
-	return data, err
+	bodyReader := bufio.NewReader(resp.Body)
+	e := determineEncoding(bodyReader)
+	utf8Reader := transform.NewReader(bodyReader, e.NewDecoder())
+	return ioutil.ReadAll(utf8Reader)
+
 }

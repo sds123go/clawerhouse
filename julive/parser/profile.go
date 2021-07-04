@@ -3,16 +3,17 @@ package parser
 import (
 	"crawler/engine"
 	"crawler/model"
+	"fmt"
 	"regexp"
 	"strings"
 )
 
 var NameRe = regexp.MustCompile(`<div class="th">楼盘名称</div>[\s\S]+?<div class="td">[\s\S]+?<div class="txt">([^<]*)`)
+
 var PriceRe = regexp.MustCompile(`<div class="th">参考单价</div>[\s\S]+?<div class="td">[\s\S]+?<div class="txt">([^<]*)`)
 var TotalRe = regexp.MustCompile(`.*总价.*</div>[\s\S]+?<div class="td">[\s\S]+?<div class="txt">([^<]*)`)
 var PropertyRe = regexp.MustCompile(`<div class="th">物业类型</div>[\s\S]+?<div class="td">[\s\S]+?<div class="txt">([^<]*)`)
 var AddressRe = regexp.MustCompile(`<div class="th">楼盘地址</div>[\s\S]+?<div class="td">[\s\S]+?<div class="txt add-txt"">([^<]*)`)
-var LoopRe = regexp.MustCompile(`<div class="th">环&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;线</div>[\s\S]+?<div class="td">[\s\S]+?<div class="txt">([^<]*)`)
 var OpenRe = regexp.MustCompile(`<div class="th">开盘时间</div>[\s\S]+?<div class="td .*">[\s\S]+?<div class="txt">([^<]*)`)
 var HandRe = regexp.MustCompile(`<div class="th">.*交房.*</div>[\s\S]+?<div class="td .*">[\s\S]+?<div class="txt">([^<]*)`)
 var DeveloperRe = regexp.MustCompile(`<div class="th">开 发 商</div>[\s\S]+?<div class="td">[\s\S]+?<div class="txt">[\s\S]+?<div class="name .*" title="([^"]*)`)
@@ -31,7 +32,6 @@ func ParserProfile(content []byte) engine.ParseResult {
 	profile.BasicIfo.TotalPrice = strings.TrimSpace(extractResult(content, TotalRe))
 	profile.BasicIfo.PropertyType = extractResult(content, PropertyRe)
 	profile.BasicIfo.Address = extractResult(content, AddressRe)
-	profile.BasicIfo.Loop = extractResult(content, LoopRe)
 	profile.SaleIfo.OpenTime = extractResult(content, OpenRe)
 	profile.SaleIfo.HandTime = extractResult(content, HandRe)
 	profile.BuildIfo.Developer = extractResult(content, DeveloperRe)
@@ -49,9 +49,11 @@ func ParserProfile(content []byte) engine.ParseResult {
 }
 func extractResult(content []byte, re *regexp.Regexp) string {
 	match := re.FindSubmatch(content)
+
 	if len(match) >= 2 {
 		return string(match[1])
 	} else {
+		fmt.Print("有问题！")
 		return ""
 	}
 }
