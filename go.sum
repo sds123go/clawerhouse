@@ -1,3 +1,7 @@
+github.com/elastic/go-elasticsearch v0.0.0 h1:Pd5fqOuBxKxv83b0+xOAJDAkziWYwFinWnBO0y+TZaA=
+github.com/elastic/go-elasticsearch v0.0.0/go.mod h1:TkBSJBuTyFdBnrNqoPc54FN0vKf5c04IdM4zuStJ7xg=
+github.com/elastic/go-elasticsearch/v7 v7.13.1 h1:PaM3V69wPlnwR+ne50rSKKn0RNDYnnOFQcuGEI0ce80=
+github.com/elastic/go-elasticsearch/v7 v7.13.1/go.mod h1:OJ4wdbtDNk5g503kvlHLyErCgQwwzmDtaFC4XyOxXA4=
 golang.org/x/net v0.0.0-20210504132125-bbd867fde50d h1:nTDGCTeAu2LhcsHTRzjyIUbZHCJ4QePArsm27Hka0UM=
 golang.org/x/net v0.0.0-20210504132125-bbd867fde50d/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
