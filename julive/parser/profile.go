@@ -25,7 +25,7 @@ var CompanyRe = regexp.MustCompile(`<div class="th">物业公司</div>[\s\S]+?<d
 var PropertyPriceRe = regexp.MustCompile(`<div class="th">物业费用</div>[\s\S]+?<div class="td">[\s\S]+?<div class=".*">([^<]*)`)
 var WaterGasRe = regexp.MustCompile(`<div class="th">水电燃气</div>[\s\S]+?<div class="td">[\s\S]+?<div class=".*">([^<]*)`)
 
-func ParserProfile(content []byte) engine.ParseResult {
+func ParserProfile(content []byte, url string, id string) engine.ParseResult {
 	profile := model.Profile{}
 	profile.BasicIfo.Name = extractResult(content, NameRe)
 	profile.BasicIfo.AvgPrice = extractResult(content, PriceRe)
@@ -43,7 +43,14 @@ func ParserProfile(content []byte) engine.ParseResult {
 	profile.PropertyIfo.PropertyPrice = extractResult(content, PropertyPriceRe)
 	profile.PropertyIfo.WaterGas = extractResult(content, WaterGasRe)
 	result := engine.ParseResult{
-		Items: []interface{}{profile},
+		Items: []engine.Item{
+			{
+				Url:     url,
+				Type:    "house",
+				Id:      id,
+				Payload: profile,
+			},
+		},
 	}
 	return result
 }
@@ -53,7 +60,7 @@ func extractResult(content []byte, re *regexp.Regexp) string {
 	if len(match) >= 2 {
 		return string(match[1])
 	} else {
-		fmt.Print("有问题！")
+		fmt.Print("Wrong！")
 		return ""
 	}
 }

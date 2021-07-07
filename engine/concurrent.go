@@ -9,7 +9,7 @@ type Scheduler interface {
 type ConcurrentEngine struct {
 	Scheduler Scheduler
 	WorkCount int
-	ItemChan  chan interface{}
+	ItemChan  chan Item
 }
 
 func (c *ConcurrentEngine) Run(seeds ...Request) {

@@ -19,7 +19,12 @@ func ParseAreaList(contents []byte) engine.ParseResult {
 			Url:        string(m[1]),
 			ParserFunc: ParserArea,
 		})
-		result.Items = append(result.Items, "行政区："+string(m[2]))
+		result.Items = append(result.Items, engine.Item{
+			Url:     string(m[1]),
+			Type:    "area",
+			Id:      string(m[2]),
+			Payload: "行政区：" + string(m[2]),
+		})
 	}
 	// for _,n:=range NextPage{
 	// 	result.Request=append(result.Request, engine.Request{

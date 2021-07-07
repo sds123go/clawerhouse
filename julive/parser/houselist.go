@@ -12,11 +12,19 @@ func ParserArea(contents []byte) engine.ParseResult {
 	matches := re.FindAllSubmatch(contents, -1)
 	result := engine.ParseResult{}
 	for _, m := range matches {
+		url := "https://sh.julive.com/project/" + string(m[1]) + "/details.html"
 		result.Requests = append(result.Requests, engine.Request{
-			Url:        "https://sh.julive.com/project/" + string(m[1]) + "/details.html",
-			ParserFunc: ParserProfile,
+			Url: url,
+			ParserFunc: func(b []byte) engine.ParseResult {
+				return ParserProfile(b, url, string(m[1]))
+			},
 		})
-		result.Items = append(result.Items, "楼盘："+string(m[2]))
+		result.Items = append(result.Items, engine.Item{
+			Url:     url,
+			Type:    "house",
+			Id:      string(m[1]),
+			Payload: "楼盘：" + string(m[2]),
+		})
 	}
 	return result
 }
