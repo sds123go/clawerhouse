@@ -3,6 +3,7 @@ package main
 import (
 	"crawler/engine"
 	"crawler/julive/parser"
+	"crawler/persist"
 	"crawler/scheduler"
 )
 
@@ -18,6 +19,7 @@ func main() {
 	e := engine.ConcurrentEngine{
 		Scheduler: &scheduler.QueuedScheduler{},
 		WorkCount: 10,
+		ItemChan: persist.ItemSaver(),
 	}
 	e.Run(engine.Request{
 		Url:        httpText,
