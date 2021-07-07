@@ -23,7 +23,7 @@ func ParseAreaList(contents []byte) engine.ParseResult {
 			Url:     string(m[1]),
 			Type:    "area",
 			Id:      string(m[2]),
-			Payload: "行政区：" + string(m[2]),
+			Payload: "行政区:" + string(m[2]),
 		})
 	}
 	// for _,n:=range NextPage{
